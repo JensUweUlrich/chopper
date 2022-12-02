@@ -15,7 +15,7 @@
 #include <iostream>
 #include <vector>
 
-#include <xxh3.h>
+#include <xxhash.h>
 
 #include <x86/avx.h>
 #include <x86/avx2.h>
