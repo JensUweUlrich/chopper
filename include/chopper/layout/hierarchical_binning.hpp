@@ -126,10 +126,12 @@ private:
         assert(data != nullptr);
 
         // initialize first column
-        double const ub_cardinality = static_cast<double>(data->kmer_counts[0]);
+        //double const ub_cardinality = static_cast<double>(data->kmer_counts[0]);
         for (size_t i = 0; i < num_technical_bins; ++i)
         {
-            size_t const corrected_ub_cardinality = static_cast<size_t>(ub_cardinality * data->fp_correction[i + 1]);
+            //no  correction needed for our application with XOR filters?
+            //size_t const corrected_ub_cardinality = static_cast<size_t>(ub_cardinality * data->fp_correction[i + 1]);
+            size_t const corrected_ub_cardinality = data->kmer_counts[0];
             matrix[i][0] = corrected_ub_cardinality / (i + 1);
             trace[i][0] = {0u, 0u}; // unnecessary?
         }
@@ -208,7 +210,8 @@ private:
         for (size_t j = 1; j < num_user_bins; ++j)
         {
             size_t const current_weight = data->kmer_counts[j];
-            double const ub_cardinality = static_cast<double>(current_weight);
+            // cast not needed because we do not correct
+            //double const ub_cardinality = static_cast<double>(current_weight);
 
             if (config.estimate_union)
                 data->sketch_toolbox.precompute_union_estimates_for(data->union_estimates, j);
@@ -223,8 +226,8 @@ private:
                 {
                     // score: The current maximum technical bin size for the high-level IBF (score for the matrix M)
                     // full_score: The score to minimize -> score * #TB-high_level + low_level_memory footprint
-                    size_t const corrected_ub_cardinality = static_cast<size_t>(ub_cardinality * data->fp_correction[(i - i_prime)]);
-                    size_t score = std::max<size_t>(corrected_ub_cardinality / (i - i_prime), matrix[i_prime][j-1]);
+                    // size_t const corrected_ub_cardinality = static_cast<size_t>(ub_cardinality * data->fp_correction[(i - i_prime)]);
+                    size_t score = std::max<size_t>(current_weight / (i - i_prime), matrix[i_prime][j-1]);
                     size_t full_score = score * (i + 1) /*#TBs*/ + config.alpha * ll_matrix[i_prime][j-1];
 
                     // std::cout << " ++ j:" << j << " i:" << i << " i':" << i_prime << " score:" << score << std::endl;
@@ -451,7 +454,7 @@ private:
         data_store libf_data{};
         libf_data.output_buffer = data->output_buffer;
         libf_data.header_buffer = data->header_buffer;
-        libf_data.fp_correction = data->fp_correction;
+        //libf_data.fp_correction = data->fp_correction;
         libf_data.false_positive_rate = data->false_positive_rate;
 
         libf_data.kmer_counts = {kmer_count};
