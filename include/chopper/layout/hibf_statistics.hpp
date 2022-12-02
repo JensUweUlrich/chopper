@@ -214,7 +214,7 @@ public:
 
                 max_split_tb_str += ":" + to_string_with_precision(max_split_bin_span);
                 avg_split_tb_str += ":" + to_string_with_precision(avg_split_bin);
-                max_factor_str   += ":" + to_string_with_precision((*fp_correction)[max_split_bin_span]);
+                //max_factor_str   += ":" + to_string_with_precision((*fp_correction)[max_split_bin_span]);
                 avg_factor_str   += ":" + to_string_with_precision(avg_factor);
             }
             else
@@ -444,8 +444,8 @@ private:
         {
             size_t const cardinality_per_split_bin = (current_bin.cardinality + current_bin.num_spanning_tbs - 1) /
                                                      current_bin.num_spanning_tbs; // round up
-            size_t const corrected_cardinality = std::ceil(cardinality_per_split_bin *
-                                                           (*fp_correction)[current_bin.num_spanning_tbs]);
+            size_t const corrected_cardinality = std::ceil(cardinality_per_split_bin);
+//                                                            * (*fp_correction)[current_bin.num_spanning_tbs]);
             max_cardinality = std::max(max_cardinality, corrected_cardinality);
             max_cardinality_no_corr = std::max(max_cardinality_no_corr, cardinality_per_split_bin);
 
