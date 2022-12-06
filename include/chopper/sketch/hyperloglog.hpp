@@ -93,6 +93,23 @@ public:
     }
 
     /**
+     * Adds element to the estimator
+     *
+     * @param[in] uin64_t hash value to add
+     */
+    void add(uint64_t hash)
+    {
+        //uint64_t hash = XXH3_64bits(str, len);
+        // the first b_ bits are used to distribute the leading zero counts along M_
+        uint64_t index = hash >> (64 - b_);
+        // WARNING: __builtin_clzl() only works with g++ and clang
+        // the bitwise-or with mask_ assures that we get at most 64 - b_ as value.
+        // Otherwise the count for hash = 0 would be 64
+        uint8_t rank = __builtin_clzl((hash << b_) | mask_) + 1;
+        M_[index] = std::max(rank, M_[index]);
+    }
+
+    /**
      * Estimates cardinality value.
      *
      * @return Estimated cardinality value.
