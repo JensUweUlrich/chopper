@@ -26,4 +26,4 @@ add_executable (measure_hyperloglog EXCLUDE_FROM_ALL measure_hyperloglog.cpp)
 target_link_libraries (measure_hyperloglog "chopper_interface")
 
 install (TARGETS chopper_count_lib chopper_layout_lib ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install (TARGETS chopper RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+#install (TARGETS chopper RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
