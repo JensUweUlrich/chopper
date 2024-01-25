@@ -74,6 +74,7 @@ else ()
     list (APPEND CHOPPER_XXHASH_ARGS "-DXXHASH_BUILD_XXHSUM=OFF")
     list (APPEND CHOPPER_XXHASH_ARGS "-DXXHASH_BUNDLED_MODE=OFF")
     list (APPEND CHOPPER_XXHASH_ARGS "-DBUILD_SHARED_LIBS=OFF")
+    list (APPEND CHOPPER_XXHASH_ARGS "-DCMAKE_INSTALL_LIBDIR=lib")
     list (APPEND CHOPPER_XXHASH_ARGS "--no-warn-unused-cli")
 
     include (ExternalProject)
@@ -92,12 +93,7 @@ endif ()
 add_library (xxhash STATIC IMPORTED)
 add_dependencies (xxhash xxhash_project)
 
-if (EXISTS "${PROJECT_BINARY_DIR}/lib")
-    set_target_properties (xxhash PROPERTIES IMPORTED_LOCATION "${CHOPPER_XXHASH_PATH}")
-else ()
-    set (CHOPPER_XXHASH_PATH "${PROJECT_BINARY_DIR}/lib64/libxxhash.a")
-    set_target_properties (xxhash PROPERTIES IMPORTED_LOCATION "${CHOPPER_XXHASH_PATH}")
-endif()
+set_target_properties (xxhash PROPERTIES IMPORTED_LOCATION "${CHOPPER_XXHASH_PATH}")
 
 target_include_directories (xxhash INTERFACE "${PROJECT_BINARY_DIR}/include")
 
