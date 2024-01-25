@@ -107,15 +107,15 @@ message (STATUS "${FontBold}You can run `make` to build the application.${FontRe
 
 ## DOCUMENTATION
 
-set (CHOPPER_BUILD_DOC ON CACHE BOOL "Build chopper documentation.")
-if (CHOPPER_BUILD_DOC)
-    add_subdirectory (doc EXCLUDE_FROM_ALL)
-endif ()
+#set (CHOPPER_BUILD_DOC ON CACHE BOOL "Build chopper documentation.")
+#if (CHOPPER_BUILD_DOC)
+#    add_subdirectory (doc EXCLUDE_FROM_ALL)
+#endif ()
 
 ## TEST
 
-set (CHOPPER_BUILD_TEST ON CACHE BOOL "Build chopper tests.")
-if (CHOPPER_BUILD_TEST)
-    enable_testing ()
-    add_subdirectory (test EXCLUDE_FROM_ALL)
-endif ()
+#set (CHOPPER_BUILD_TEST ON CACHE BOOL "Build chopper tests.")
+#if (CHOPPER_BUILD_TEST)
+#    enable_testing ()
+#    add_subdirectory (test EXCLUDE_FROM_ALL)
+#endif ()
