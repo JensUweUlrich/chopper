@@ -91,7 +91,14 @@ endif ()
 
 add_library (xxhash STATIC IMPORTED)
 add_dependencies (xxhash xxhash_project)
-set_target_properties (xxhash PROPERTIES IMPORTED_LOCATION "${CHOPPER_XXHASH_PATH}")
+
+if (EXISTS "${CHOPPER_XXHASH_PATH}")
+    set_target_properties (xxhash PROPERTIES IMPORTED_LOCATION "${CHOPPER_XXHASH_PATH}")
+else ()
+    set (CHOPPER_XXHASH_PATH "${PROJECT_BINARY_DIR}/lib64/libxxhash.a")
+    set_target_properties (xxhash PROPERTIES IMPORTED_LOCATION "${CHOPPER_XXHASH_PATH}")
+endif()
+
 target_include_directories (xxhash INTERFACE "${PROJECT_BINARY_DIR}/include")
 
 # Use ccache.
